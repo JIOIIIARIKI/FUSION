@@ -1,0 +1,254 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://kartinki.pics/uploads/posts/2021-07/thumbs/1626216266_10-kartinkin-com-p-serii-razmitii-fon-krasivo-10.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.navig {
+    background-color: gray;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.navig nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navig nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.navig nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navig nav ul li a:hover {
+   color: white;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #222222;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.container form {
+    text-align: center;
+}
+
+.container label {
+    display: block;
+    margin: 10px;
+    color: #ffffff;
+}
+
+.container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.container button[type="submit"] {
+    background-color: #000000;
+    color: white;
+    padding: 15px 150px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.container button[type="submit"]:hover {
+    background-color: #333333;
+}
+
+.history {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #222222;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.history th, .history td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+}
+
+.history th {
+    background-color: #000000;
+}
+
+h2 {
+    color: white;
+}
+
+th {
+    color: white;
+}
+
+td {
+    color: white;
+}
+
+.history-button {
+    position: absolute;
+    top: 5%;
+    right: 20px;
+    transform: translateY(-5%);
+    background-color: #000000;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    z-index: 1000;
+}
+
+.history-button:hover {
+    background-color: #333333;
+}
+
+.error-message {
+    position: fixed;
+    top: 50%;
+    left: -300px;
+    z-index: 1000;
+    background-color: #f44336;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    animation: slideIn 2s forwards, fadeOut 10s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        left: -300px;
+    }
+    to {
+        left: 0px;
+    }
+}
+
+
+.closebtn {
+    color: white;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: -300px;
+    z-index: 1000;
+    background-color: green;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    animation: slideIn 2s forwards, fadeOut 10s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        left: -300px;
+    }
+    to {
+        left: 0px;
+    }
+}
+
+
+.closebtn {
+    color: white;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+.logout-form button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #000;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+}
+
+.logout-form button[type="submit"]:hover {
+    background-color: #333333;
+}

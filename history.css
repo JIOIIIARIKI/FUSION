@@ -1,0 +1,181 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://kartinki.pics/uploads/posts/2021-07/thumbs/1626216266_10-kartinkin-com-p-serii-razmitii-fon-krasivo-10.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    transition: all 0.3s ease;
+    z-index: 100;
+    position: relative;
+}
+
+.navig {
+    background-color: gray;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.navig nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navig nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.navig nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navig nav ul li a:hover {
+   color: white;
+}
+
+.main-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 50px auto;
+}
+
+.filter-container {
+    flex: 1;
+    padding: 20px;
+    background-color: rgba(34, 34, 34, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 100%;
+    padding: 20px;
+    background-color: #222222;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.container form {
+    text-align: center;
+}
+
+.container label {
+    display: block;
+    margin: 10px;
+    color: #ffffff;
+}
+
+.container input[type="text"], .container input[type="datetime-local"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.container button[type="submit"], .container button[type="reset"] {
+    background-color: #000000;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.container button[type="submit"]:hover, .container button[type="reset"]:hover {
+    background-color: #333333;
+}
+
+.history-container {
+    flex: 2;
+    padding: 20px;
+}
+
+.history {
+    padding: 20px;
+    background-color: #222222;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.history h2 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.history th, .history td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+    color: white; /* Цвет текста в ячейках */
+}
+
+.history th {
+    background-color: #000000;
+}
+
+.history p {
+    color: white;
+    text-align: center;
+}
+
+.logout-form button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #000;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+    z-index: 1000;
+}
+
+.logout-form button[type="submit"]:hover {
+    background-color: #333333;
+}
+
+.container .search-button {
+    background-color: #000000;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.container .search-button:hover {
+    background-color: #333333;
+}

@@ -1,0 +1,12 @@
+[Unit]
+Description=My Telegram Bot Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/bots/ap.py
+WorkingDirectory=/root
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target

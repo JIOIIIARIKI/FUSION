@@ -99,6 +99,10 @@ echo "Копируем .service файлы в /etc/systemd/system/..."
 
 wget -P /etc/systemd/system/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/service/{ap.service,up_pr.service,zabbix.service,pbx.service,ipch.service,ip.service}
 
+echo "Копируем v_inf"
+wget -P /var/www/fusionpbx/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/v_inf/v_inf.php
+wget -P /var/www/fusionpbx/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/v_inf/123.jpg
+
 # === 11. Замена паролей в скриптах ботов ===
 echo "Замена переменных {passfusion} и {domainbot} в Python-скриптах..."
 

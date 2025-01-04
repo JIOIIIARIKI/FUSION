@@ -38,13 +38,13 @@ systemctl start mariadb
 systemctl enable mariadb
 
 mysql -uroot <<EOF
-CREATE DATABASE ipadd;
-CREATE USER 'root'@'localhost' IDENTIFIED BY '1Yb74rfBhrTwtJHh';
+CREATE DATABASE IF NOT EXISTS ipadd;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1Yb74rfBhrTwtJHh';
 GRANT ALL PRIVILEGES ON ipadd.* TO 'root'@'localhost';
 FLUSH PRIVILEGES;
 
 USE ipadd;
-CREATE TABLE ip_attempts (
+CREATE TABLE IF NOT EXISTS ip_attempts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ip_address VARCHAR(45),
     attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -52,13 +52,14 @@ CREATE TABLE ip_attempts (
     user VARCHAR(50),
     method VARCHAR(50)
 );
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100),
     password VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 EOF
+
 
 echo "MariaDB"
 

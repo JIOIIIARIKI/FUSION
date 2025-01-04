@@ -1,0 +1,39 @@
+-- Определяем список номеров
+local numbers = {
+    "6498884471",
+    "6498884473",
+    "6498884470",
+    "6498884475",
+    "6498884476"
+}
+
+-- Функция для генерации случайного числа в диапазоне от 1 до длины списка
+local function get_random_number()
+    math.randomseed(os.time())  -- Инициализация генератора случайных чисел
+    return numbers[math.random(1, #numbers)]
+end
+
+-- Получаем рандомный номер
+local random_number = get_random_number()
+
+-- Устанавливаем Caller ID в соответствии с рандомным номером
+session:setVariable("origination_caller_id_number", random_number)-- Определяем список номеров
+local numbers = {
+    "6498884471",
+    "6498884473",
+    "6498884470",
+    "6498884475",
+    "6498884476"
+}
+
+-- Функция для генерации случайного числа в диапазоне от 1 до длины списка
+local function get_random_number()
+    math.randomseed(os.time())  -- Инициализация генератора случайных чисел
+    return numbers[math.random(1, #numbers)]
+end
+
+-- Получаем рандомный номер
+local random_number = get_random_number()
+
+-- Устанавливаем Caller ID в соответствии с рандомным номером
+session:setVariable("calld_id", random_number)

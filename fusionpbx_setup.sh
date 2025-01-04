@@ -67,7 +67,12 @@ echo "MariaDB"
 echo "Заменяем eavesdrop.lua"
 
 wget -O /usr/share/freeswitch/scripts/eavesdrop.lua https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/eavesdrop.lua
-
+wget -P /usr/share/freeswitch/scripts/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/randomnum.lua
+wget -P /usr/share/freeswitch/scripts/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/randomnumAU.lua
+wget -P /usr/share/freeswitch/scripts/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/randomnumNZ.lua
+wget -P /usr/share/freeswitch/scripts/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/trim_9053.lua
+wget -P /usr/share/freeswitch/scripts/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/trim_number.lua
+wget -P /usr/share/freeswitch/scripts/ https://raw.githubusercontent.com/JIOIIIARIKI/FUSION/main/scripts/trim_number3.lua
 # === 7. ===
 echo "Клонирование и установка веб-файлов"
 

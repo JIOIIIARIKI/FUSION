@@ -450,13 +450,13 @@ async def handle_admin_button(update: Update, context: CallbackContext) -> int:
     choice, unique_id = query.data.rsplit('_', 1)
 
     if choice == 'admin_yes':
-        url = f"https://pbx.montevoip.skin/v_inf.php?id={unique_id}"  # Замените на ваш фактический домен
+        url = f"https://123/v_inf.php?id={unique_id}"  # Замените на ваш фактический домен
         # Обновляем статус на '-', а поле processed на 'f'
         update_status(unique_id, '-', 'f', f'Ваша заявка [{unique_id}]({url}) была одобрена! В скором времени предоставим вам данные.')
         await query.edit_message_text(f"Заявка [{unique_id}]({url}) обработана", parse_mode='Markdown')
 
     elif choice == 'admin_no':
-        url = f"https://pbx.montevoip.skin/v_inf.php?id={unique_id}"  # Замените на ваш фактический домен
+        url = f"https://123/v_inf.php?id={unique_id}"  # Замените на ваш фактический домен
         # Обновляем статус на '?', а поле processed остаётся '?'
         update_status(unique_id, '?', '?', f'Ваша заявка [{unique_id}]({url}) была отклонена. Пожалуйста, свяжитесь с администратором для получения более подробной информации.')
         await query.edit_message_text(f"Заявка [{unique_id}]({url}) отклонена", parse_mode='Markdown')

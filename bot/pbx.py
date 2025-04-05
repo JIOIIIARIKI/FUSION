@@ -80,7 +80,7 @@ def get_domain_uuid_from_db(domain_name):
 def create_domain(domain_name, api_key):
     try:
         response = requests.post(
-            f'https://pbx.montevoip.skin/app/vsa/domain_edit.php?key=kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6',
+            f'https://123/app/vsa/domain_edit.php?key=kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6',
             data={
                 'domain_name': domain_name,
                 'domain_description': domain_name,
@@ -131,7 +131,7 @@ def handle_form_data(data):
 
     try:
         user_edit_response = requests.post(
-            f'https://pbx.montevoip.skin/app/vsa/user_edit.php?key=kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6',
+            f'https://123/app/vsa/user_edit.php?key=kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6',
             data={
                 'domain_uuid': domain_uuid,
                 'username': data['username'],
@@ -155,7 +155,7 @@ def handle_form_data(data):
 
     try:
         extensions_edit_response = requests.post(
-            f'https://pbx.montevoip.skin/app/vsa/extension_edit.php?key={api_key}',
+            f'https://123/app/vsa/extension_edit.php?key={api_key}',
             data={
                 'domain_uuid': domain_uuid,
                 'extension': data['internal_number'],
@@ -171,7 +171,7 @@ def handle_form_data(data):
 
     try:
         dialplan_outbound_add_response = requests.post(
-            f'https://pbx.montevoip.skin/app/vsa/dialplan_outbound_add.php?key={api_key}',
+            f'https://123/app/vsa/dialplan_outbound_add.php?key={api_key}',
             data={
                 'domain_uuid': domain_uuid,
                 'dialplan_expression': '^\+?(\d+)$',
@@ -188,7 +188,7 @@ def handle_form_data(data):
             dialplan_expression1 = r'^\*46({0}\d{{2}})$'.format(base_extension)
             dialplan_expression2 = r'^\*45({0}\d{{2}})$'.format(base_extension)
             requests.post(
-                f'https://pbx.montevoip.skin/app/vsa/dialplan_outbound_add2.php?key={api_key}',
+                f'https://123/app/vsa/dialplan_outbound_add2.php?key={api_key}',
                 data={
                     'domain_uuid': domain_uuid,
                     'dialplan_expression': dialplan_expression2,
@@ -197,7 +197,7 @@ def handle_form_data(data):
                 }
             )
             requests.post(
-                f'https://pbx.montevoip.skin/app/vsa/dialplan_outbound_add3.php?key={api_key}',
+                f'https://123/app/vsa/dialplan_outbound_add3.php?key={api_key}',
                 data={
                     'domain_uuid': domain_uuid,
                     'dialplan_expression': dialplan_expression1,

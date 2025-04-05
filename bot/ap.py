@@ -10,11 +10,11 @@ from ext_user import generate_unique_id as generate_unique_id_ext, get_domains, 
 from add_client import generate_password, generate_unique_id as generate_unique_id_add, sanitize_company_name, get_next_client_prefix, get_next_context_value, get_next_multysip_extension, insert_client_data, find_form_by_unique_id, update_status, check_v_read
 
 
-TOKEN = '**'
+TOKEN = '7607391183:AAFwghua1-UXf_W_a8W6eW-RmIjvM7CH2fY'
 
 BASE_DIR = '/var/lib/freeswitch/recordings/'
 
-NOTIFICATION_CHAT_ID = -1002163643136
+NOTIFICATION_CHAT_ID = -4509298371
 
 START, PROCESS_SELECTION, COMPANY, SIP_TYPE, SIP_QUANTITY, IP_ADDRESS, ADMIN, ADMIN_ID, RECORD, SELECT_DOMAIN, SELECT_USERS, SELECT_EXTENSIONS, CONFIRM = range(13)
 
@@ -281,7 +281,7 @@ async def confirm_selection(update: Update, context: CallbackContext) -> int:
 
         insert_data_to_db(unique_id, domain_uuid, selected_users, selected_extensions)
 
-        added_users = set()
+        added_users = set()  # Используем множество для автоматического удаления дубликатов
         added_extensions = set()
 
         for user_uuid in selected_users:
@@ -289,9 +289,11 @@ async def confirm_selection(update: Update, context: CallbackContext) -> int:
                 username = get_username(user_uuid)
                 extension = get_extension(extension_uuid)
                 
+                # Добавляем уникальные значения в множества
                 added_users.add(username)
                 added_extensions.add(extension)
 
+        # Преобразуем множества обратно в строки для вывода
         added_users_str = ", ".join(added_users)
         added_extensions_str = ", ".join(added_extensions)
         confirmation_message = (f"Данные успешно сохранены для заявки {unique_id}!\n"
@@ -359,7 +361,6 @@ async def sip_quantity(update: Update, context: CallbackContext) -> int:
 
 async def ip_address(update: Update, context: CallbackContext) -> int:
     chat_id = update.message.chat_id
-    username_user = update.message.from_user.username
     client_data[chat_id]['ip_address'] = update.message.text
     company = sanitize_company_name(client_data[chat_id]['company'])
     sip_type = client_data[chat_id]['sip_type']
@@ -367,7 +368,7 @@ async def ip_address(update: Update, context: CallbackContext) -> int:
     ip_address = client_data[chat_id]['ip_address']
     unique_id = client_data[chat_id]['unique_id']
 
-    domain = f"{company}.voiceapp.sbs" if sip_type == 'several_sip' else "multysip.voiceapp.sbs"
+    domain = f"{company}.montevoip.skin" if sip_type == 'several_sip' else "sip.montevoip.skin"
     domain = domain.lower()
     username = company
     password = generate_password()
@@ -383,14 +384,13 @@ async def ip_address(update: Update, context: CallbackContext) -> int:
     status = '?'
     dialplan_name = context_value
 
-    insert_client_data(unique_id, username, password, 'user', domain, internal_number, dialplan_name, sip_quantity, context_value, client_prefix, ip_address, status, username_user)
+    insert_client_data(unique_id, username, password, 'user', domain, internal_number, dialplan_name, sip_quantity, context_value, client_prefix, ip_address, status)
 
     client_message = (
         f"ID заявки: {unique_id}\n"
         f"Компания: {username}\n"
         f"Количество сип аккаунтов: {sip_quantity}\n"
         f"IP клиента: {ip_address}\n"
-        f"Ваш ник: {username_user}\n"
         f"Правильные ли данные?"
     )
 
@@ -410,18 +410,22 @@ async def handle_client_button(update: Update, context: CallbackContext) -> int:
     logger.info(f"Пользователь выбрал: {choice} для заявки {unique_id}")
 
     if choice == 'client_yes':
+        # Найти форму по уникальному ID и отправить в чат администратору
         form = find_form_by_unique_id(unique_id)
         await context.bot.send_message(
             chat_id=NOTIFICATION_CHAT_ID,
             text=form,
+            parse_mode='Markdown',
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("Да", callback_data=f'admin_yes_{unique_id}')],
                 [InlineKeyboardButton("Нет", callback_data=f'admin_no_{unique_id}')]
             ])
         )
         
+        # Оповестить пользователя о необходимости одобрения заявки
         await query.edit_message_text("Одобрите пожалуйста заявку в чате.")
 
+        # Завершение обработки заявки и отправка сообщения со списком команд
         await query.message.reply_text(
             "Заявка успешно обработана. Пожалуйста, введите одну из команд:\n\n"
             "/add_client - добавить нового клиента\n"
@@ -431,6 +435,7 @@ async def handle_client_button(update: Update, context: CallbackContext) -> int:
     elif choice == 'client_no':
         await query.edit_message_text("Заявка отклонена. Для начала нового действия введите ещё раз команду.")
 
+        # Завершение и предоставление списка команд
         await query.message.reply_text(
             "Действие завершено. Пожалуйста, введите одну из команд:\n\n"
             "/add_client - добавить нового клиента\n"
@@ -445,12 +450,14 @@ async def handle_admin_button(update: Update, context: CallbackContext) -> int:
     choice, unique_id = query.data.rsplit('_', 1)
 
     if choice == 'admin_yes':
-        url = f"https://{domainbot}/v_inf.php?id={unique_id}"
+        url = f"https://pbx.montevoip.skin/v_inf.php?id={unique_id}"  # Замените на ваш фактический домен
+        # Обновляем статус на '-', а поле processed на 'f'
         update_status(unique_id, '-', 'f', f'Ваша заявка [{unique_id}]({url}) была одобрена! В скором времени предоставим вам данные.')
         await query.edit_message_text(f"Заявка [{unique_id}]({url}) обработана", parse_mode='Markdown')
 
     elif choice == 'admin_no':
-        url = f"https://{domainbot}/v_inf.php?id={unique_id}" 
+        url = f"https://pbx.montevoip.skin/v_inf.php?id={unique_id}"  # Замените на ваш фактический домен
+        # Обновляем статус на '?', а поле processed остаётся '?'
         update_status(unique_id, '?', '?', f'Ваша заявка [{unique_id}]({url}) была отклонена. Пожалуйста, свяжитесь с администратором для получения более подробной информации.')
         await query.edit_message_text(f"Заявка [{unique_id}]({url}) отклонена", parse_mode='Markdown')
 
@@ -492,8 +499,8 @@ def find_records(phone_numbers, start_date, end_date):
 
 async def handle_phone_number(update: Update, context: CallbackContext):
     phone_numbers_text = update.message.text
-    phone_numbers = phone_numbers_text.split('\n') 
-    context.user_data['phone_numbers'] = [number.strip() for number in phone_numbers if number.strip()]
+    phone_numbers = phone_numbers_text.split('\n')  # Разделяем номера по строкам
+    context.user_data['phone_numbers'] = [number.strip() for number in phone_numbers if number.strip()]  # Очищаем и сохраняем
     
     keyboard = [
         [InlineKeyboardButton("Сегодня", callback_data='today')],
@@ -526,11 +533,13 @@ async def button(update: Update, context: CallbackContext):
         start_date = datetime(1970, 1, 1).date()
 
     try:
+        # Обновляем сообщение с кнопками на "Идёт поиск."
         progress_message = await query.message.edit_text('Идёт поиск.')
     except telegram.error.BadRequest as e:
         if str(e) != "Message is not modified":
             raise
 
+    # Создаём эффект прогресса поиска
     for i in range(4):
         await asyncio.sleep(1)
         try:
@@ -543,6 +552,7 @@ async def button(update: Update, context: CallbackContext):
     results = find_records(phone_numbers, start_date, end_date)
     
     if results:
+        # Список сообщений для удаления
         messages_to_delete = []
         
         for domain, records in results.items():
@@ -557,8 +567,10 @@ async def button(update: Update, context: CallbackContext):
     else:
         await query.message.reply_text('Записи не найдены.')
 
+    # Удаляем сообщение с прогрессом поиска
     await progress_message.delete()
 
+    # Завершение команды и предоставление списка команд
     await query.message.reply_text(
         "Действие завершено. Пожалуйста, введите одну из команд:\n\n"
         "/add_client - добавить нового клиента\n"

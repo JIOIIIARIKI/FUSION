@@ -8,22 +8,21 @@ import time
 from telegram.ext import Application
 from telegram import Bot
 
-TOKEN = '**'
+TOKEN = '7782817983:AAGJ0KZihTFbbBwIiwB3j1TqyEpzkjdkyVc'
 
 api_key = 'kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6'
-CHANNEL_ID = '-1002173389103'
+CHANNEL_ID = '-1002450667973'
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 
-logger = logging.getLogger(__name__)
 
 DB_PARAMS = {
     'dbname': 'fusionpbx',
     'user': 'fusionpbx',
-    'password': '{passfusion}',
+    'password': 'UMPM1GkzQa2UOH3Qvp2nLtkM',
     'host': '127.0.0.1',
     'port': '5432',
     'sslmode': 'prefer'
@@ -81,19 +80,19 @@ def get_domain_uuid_from_db(domain_name):
 def create_domain(domain_name, api_key):
     try:
         response = requests.post(
-            f'https://{domainbot}/app/vsa/domain_edit.php?key={api_key}',
+            f'https://pbx.montevoip.skin/app/vsa/domain_edit.php?key=kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6',
             data={
                 'domain_name': domain_name,
                 'domain_description': domain_name,
             }
         )
-        logger.info(f"domain_edit.php Response: {response.status_code} - {response.text}")
+        logging.info(f"domain_edit.php Response: {response.status_code} - {response.text}")
         if response.status_code == 200:
             return get_domain_uuid_from_db(domain_name)
         else:
-            logger.error(f"Failed to create domain. Status code: {response.status_code}, Response: {response.text}")
+            logging.error(f"Failed to create domain. Status code: {response.status_code}, Response: {response.text}")
     except requests.RequestException as e:
-        logger.error(f"Ошибка при отправке запроса на domain_edit.php: {e}")
+        logging.error(f"Ошибка при отправке запроса на domain_edit.php: {e}")
     return None
 
 def get_user_uuid_from_db(username, domain_uuid):
@@ -132,7 +131,7 @@ def handle_form_data(data):
 
     try:
         user_edit_response = requests.post(
-            f'https://{domainbot}/app/vsa/user_edit.php?key={api_key}',
+            f'https://pbx.montevoip.skin/app/vsa/user_edit.php?key=kLgTqH3YjWJLBJPcLX3u9C5SBeegA8V6',
             data={
                 'domain_uuid': domain_uuid,
                 'username': data['username'],
@@ -141,7 +140,7 @@ def handle_form_data(data):
                 'group_uuid_name': f"{group_uuid}|{data['group_name']}"
             }
         )
-        logger.info(f"user_edit.php Response: {user_edit_response.status_code} - {user_edit_response.text}")
+        logging.info(f"user_edit.php Response: {user_edit_response.status_code} - {user_edit_response.text}")
 
         if user_edit_response.status_code == 200:
             user_uuid = get_user_uuid_from_db(data['username'], domain_uuid)
@@ -151,12 +150,12 @@ def handle_form_data(data):
         else:
             return "Ошибка при создании пользователя."
     except requests.RequestException as e:
-        logger.error(f"Ошибка при отправке запроса на user_edit.php: {e}")
+        logging.error(f"Ошибка при отправке запроса на user_edit.php: {e}")
         return "Ошибка при отправке данных на user_edit.php."
 
     try:
         extensions_edit_response = requests.post(
-            f'https://{domainbot}/app/vsa/extension_edit.php?key={api_key}',
+            f'https://pbx.montevoip.skin/app/vsa/extension_edit.php?key={api_key}',
             data={
                 'domain_uuid': domain_uuid,
                 'extension': data['internal_number'],
@@ -165,31 +164,31 @@ def handle_form_data(data):
                 'extension_users[0][user_uuid]': user_uuid
             }
         )
-        logger.info(f"extensions_edit.php Response: {extensions_edit_response.status_code} - {extensions_edit_response.text}")
+        logging.info(f"extensions_edit.php Response: {extensions_edit_response.status_code} - {extensions_edit_response.text}")
     except requests.RequestException as e:
-        logger.error(f"Ошибка при отправке запроса на extensions_edit.php: {e}")
+        logging.error(f"Ошибка при отправке запроса на extensions_edit.php: {e}")
         return "Ошибка при отправке данных на extensions_edit.php."
 
     try:
         dialplan_outbound_add_response = requests.post(
-            f'https://{domainbot}/app/vsa/dialplan_outbound_add.php?key={api_key}',
+            f'https://pbx.montevoip.skin/app/vsa/dialplan_outbound_add.php?key={api_key}',
             data={
                 'domain_uuid': domain_uuid,
                 'dialplan_expression': '^\+?(\d+)$',
                 'context': data['context_value'],
                 'name': data['dialplan_name'],
                 'user_prefix': data['user_prefix'],
-                'gateway': '65fc0956-af8f-4928-92be-b8e70f1d6ecc'
+                'gateway': 'd7ca4002-94a6-498b-8c89-c2892ed6e1c3'
             }
         )
-        logger.info(f"dialplan_outbound_add.php Response: {dialplan_outbound_add_response.status_code} - {dialplan_outbound_add_response.text}")
+        logging.info(f"dialplan_outbound_add.php Response: {dialplan_outbound_add_response.status_code} - {dialplan_outbound_add_response.text}")
 
         if int(data['quantity']) > 1:
             base_extension = data["internal_number"][:-2]
             dialplan_expression1 = r'^\*46({0}\d{{2}})$'.format(base_extension)
             dialplan_expression2 = r'^\*45({0}\d{{2}})$'.format(base_extension)
             requests.post(
-                f'https://{domainbot}/app/vsa/dialplan_outbound_add2.php?key={api_key}',
+                f'https://pbx.montevoip.skin/app/vsa/dialplan_outbound_add2.php?key={api_key}',
                 data={
                     'domain_uuid': domain_uuid,
                     'dialplan_expression': dialplan_expression2,
@@ -198,7 +197,7 @@ def handle_form_data(data):
                 }
             )
             requests.post(
-                f'https://{domainbot}/app/vsa/dialplan_outbound_add3.php?key={api_key}',
+                f'https://pbx.montevoip.skin/app/vsa/dialplan_outbound_add3.php?key={api_key}',
                 data={
                     'domain_uuid': domain_uuid,
                     'dialplan_expression': dialplan_expression1,
@@ -208,7 +207,7 @@ def handle_form_data(data):
             )
 
     except requests.RequestException as e:
-        logger.error(f"Ошибка при отправке запроса на dialplan_outbound_add.php: {e}")
+        logging.error(f"Ошибка при отправке запроса на dialplan_outbound_add.php: {e}")
         return "Ошибка при отправке данных на dialplan_outbound_add.php."
 
     result_message = f"Данные обработаны:\nID заявки: {data['id']}\n\n"
@@ -220,11 +219,11 @@ def handle_form_data(data):
         extension = str(int(data['internal_number']) + i)
         sip_data = get_sip_account_data(domain_uuid, extension)
         if sip_data:
-            result_message += f"**Log:** `{extension}`\n**Pass:** `{sip_data[0]}`\n**Domain:** `{data['domain']}`\n\n"
-
+           result_message += f"**Log:** `{extension}`\n**Pass:** `{sip_data[0]}`\n**Domain:** `{data['domain']}`\n\n"
+ 
     random_password = generate_random_password()
-    result_message += f"**Лк для баланса:**\nhttps://user.voiceapp.mobi/\n**Log:** `{data['username']}`\n**Pass:** `{random_password}`\n\n"
-    result_message += "**Пополнения вносите через ЛК: Payments - New Payment (если не отображает кнопка New Payment нужно очистить кеш браузера данной страницы Ctrl+F5) - Появится изображение с суммой 5,1 (отображается как установленный минимальный порог для платежа) и информацией нужного кошелька, на него сбрасываете средства от 5,1 - оплата - дождитесь в течении 3х минут проверки и зачисления на баланс средств!)**"
+    result_message += f"Лк для баланса:\nhttps://user.voiceapp.mobi/\nLog: `{data['username']}`\nPass: `{random_password}`\n\n"
+    result_message += "Пополнения вносите через ЛК: Payments - New Payment (если не отображает кнопка New Payment нужно очистить кеш браузера данной страницы Ctrl+F5) - Появится изображение с суммой 5,1 (отображается как установленный минимальный порог для платежа) и информацией нужного кошелька, на него сбрасываете средства от 5,1 - оплата - дождитесь в течении 3х минут проверки и зачисления на баланс средств!)"
 
     return result_message
 
@@ -258,7 +257,7 @@ async def main():
                 update_request_status(request_id, '+')
             time.sleep(60) 
         except Exception as e:
-            logger.error(f"Произошла ошибка: {e}")
+            logging.error(f"Произошла ошибка: {e}")
             time.sleep(60) 
 
 if __name__ == '__main__':
